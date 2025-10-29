@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Liasam Dental Clinic</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --blue: #007bff; --white: #ffffff; }
+    html, body { margin: 0; scroll-behavior: smooth; }
+
+    /* Hero slider */
+    .hero { position: relative; height: 90vh; overflow: hidden; }
+    .hero-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: opacity 1.5s ease-in-out; opacity: 0;
+    }
+    .hero-slide.active { opacity: 1; }
+
+    /* Floating buttons */
+    .floating-btn {
+      position: fixed; bottom: 20px; width: 55px; height: 55px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: white; z-index: 50; cursor: pointer; animation: bounce 2s infinite;
+    }
+    .whatsapp-btn { right: 20px; background-color: #25D366; }
+    .chatbot-btn { right: 90px; background-color: #007bff; }
+    @keyframes bounce {
+      0%,20%,50%,80%,100%{transform:translateY(0)}
+      40%{transform:translateY(-10px)} 60%{transform:translateY(-5px)}
+    }
+
+    /* Ensure long text wraps neatly */
+#chatBox div {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Customize scrollbar (optional, looks neat) */
+#chatBox::-webkit-scrollbar {
+  width: 6px;
+}
+#chatBox::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+#menuBtn span {
+  transform-origin: center;
+}
+#bookingModal {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#bookingModal:not(.hidden) {
+  opacity: 1;
+}
+#bookingCard {
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+}
+#bookingModal:not(.hidden) #bookingCard {
+  transform: translateY(0);
+}
+#contactModal {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#contactModal:not(.hidden) {
+  opacity: 1;
+}
+#contactCard {
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+}
+#contactModal:not(.hidden) #contactCard {
+  transform: translateY(0);
+}
+
+
+  </style>
+</head>
+<body class="font-sans text-gray-800">
+
+    <!-- Header -->
+<header class="bg-white shadow fixed top-0 left-0 w-full z-40">
+  <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- Logo -->
+    <h1 class="text-2xl font-bold text-blue-600">Liasam Dental Clinic</h1>
+
+    <!-- Desktop Nav -->
+    <nav id="navMenu" class="space-x-6 hidden md:flex">
+      <a href="#home" class="hover:text-blue-600 font-medium">Home</a>
+      <a href="#services" class="hover:text-blue-600 font-medium">Services</a>
+      <a href="about.html" class="hover:text-blue-600 font-medium">About</a>
+      <a href="#map" class="hover:text-blue-600 font-medium">Map</a>
+    </nav>
+
+   <!-- Hamburger / Close Button -->
+<button id="menuBtn" class="md:hidden text-blue-600 focus:outline-none relative w-8 h-8" aria-label="Toggle menu">
+  <span class="absolute block w-8 h-[2px] bg-current top-2 left-0 transition-all duration-300"></span>
+  <span class="absolute block w-8 h-[2px] bg-current top-4 left-0 transition-all duration-300"></span>
+  <span class="absolute block w-8 h-[2px] bg-current top-6 left-0 transition-all duration-300"></span>
+</button>
+
+  </div>
+
+ <!-- Mobile Drawer Menu -->
+<nav id="mobileMenu"
+     class="hidden md:hidden fixed top-0 left-0 h-full w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40">
+  <ul class="flex flex-col mt-20 space-y-6 px-6 text-gray-700">
+    <li><a href="#home" class="block hover:text-blue-600 font-medium" onclick="toggleMenu()">Home</a></li>
+    <li><a href="#services" class="block hover:text-blue-600 font-medium" onclick="toggleMenu()">Services</a></li>
+    <li><a href="about.html" class="block hover:text-blue-600 font-medium" onclick="toggleMenu()">About</a></li>
+    <li><a href="#map" class="block hover:text-blue-600 font-medium" onclick="toggleMenu()">Map</a></li>
+  </ul>
+</nav>
+
+
+</header>
+
+<!-- Background overlay for mobile menu -->
+<div id="menuOverlay"
+     class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-30 transition-opacity duration-300 opacity-0 md:hidden">
+</div>
+
+  <!-- Hero -->
+  <section id="home" class="hero mt-16">
+    <div class="hero-slide bg-cover bg-[50%_40%] active" style="background-image:url('image3.jpeg');"></div>
+    <div class="hero-slide bg-cover bg-[50%_20%]" style="background-image:url('image2.jpeg');"></div>
+    <div class="hero-slide bg-cover bg-[50%_20%]" style="background-image:url('image.jpeg');"></div>
+
+    <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
+      <h2 class="text-4xl sm:text-5xl font-extrabold mb-4">Your Smile, Our Priority</h2>
+      <p class="text-lg mb-6 max-w-2xl">Comprehensive dental care for all ages, ensuring comfort, confidence, and lasting oral health.</p>
+      <div class="space-x-4">
+<button onclick="openContactOptions()" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold text-white">
+  Contact Us
+</button>
+<button onclick="openBooking()" class="bg-white text-blue-700 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold">
+  Book Appointment
+</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold text-blue-600 mb-10">Our Services</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"><h3 class="font-semibold text-lg">Teeth Cleaning</h3></div>
+        <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"><h3 class="font-semibold text-lg">Permanent Fillings</h3></div>
+        <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"><h3 class="font-semibold text-lg">Consultation</h3></div>
+        <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"><h3 class="font-semibold text-lg">Fixed Braces</h3></div>
+        <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"><h3 class="font-semibold text-lg">Tooth Extraction</h3></div>
+        <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"><h3 class="font-semibold text-lg">Tooth Replacement</h3></div>
+        <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"><h3 class="font-semibold text-lg">Crown / Bridgework</h3></div>
+        <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"><h3 class="font-semibold text-lg">Root Canal / Treatment</h3></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section id="map" class="py-10">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-2xl font-bold text-blue-600 mb-6">Find Us</h2>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15957.202427254185!2d37.070574!3d-1.0385427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f4f4e41a3b939%3A0x2694baeb1a4aa66f!2sLiasam%20Dental%20clinic!5e0!3m2!1sen!2ske!4v1700000000000"
+        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
+      </iframe>
+      <p class="mt-4">
+        <a href="https://www.google.com/maps/place/Liasam+Dental+clinic/@-1.0385373,37.0779991,17z"
+           target="_blank" class="text-blue-600 font-medium hover:underline">
+          Open Larger Map
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- WhatsApp Button -->
+  <div class="floating-btn whatsapp-btn" onclick="window.open('https://wa.me/254724370896','_blank')">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12.004 2C6.48 2 2 6.48 2 12a9.95 9.95 0 001.637 5.46L2 22l4.694-1.617A9.949 9.949 0 0012.004 22C17.524 22 22 17.52 22 12S17.524 2 12.004 2z"/>
+    </svg>
+  </div>
+
+  <!-- Chatbot Floating Button -->
+  <div class="floating-btn chatbot-btn" onclick="toggleChat()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 3C6.486 3 2 6.935 2 12c0 1.92.75 3.678 2 5.09V21l3.09-1.545C8.322 20.251 10.08 21 12 21c5.514 0 10-3.935 10-9s-4.486-9-10-9z"/>
+    </svg>
+  </div>
+
+ <!-- Chatbot Window -->
+<div id="chatbotWindow"
+     class="hidden fixed bottom-24 right-6 w-80 max-w-full bg-white rounded-2xl shadow-xl flex flex-col z-50 overflow-hidden">
+
+  <!-- Header -->
+  <div class="bg-blue-600 text-white p-3 flex justify-between items-center">
+    <span class="font-semibold">Liasam Chat Assistant</span>
+    <button onclick="toggleChat()" class="font-bold text-xl">&times;</button>
+  </div>
+
+  <!-- Scrollable Chat Area -->
+  <div id="chatBox"
+       class="flex-1 overflow-y-auto bg-gray-50 p-2 space-y-1"
+       style="max-height: 60vh;">
+    <div class="bot-msg bg-blue-100 text-gray-800 p-3 rounded-lg max-w-[80%] break-words">
+      👋 Hi there! I’m Liasam’s assistant. How can I help you today?
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="border-t bg-white p-2 flex items-center">
+    <input id="userInput" type="text"
+           placeholder="Type your message..."
+           class="flex-1 outline-none text-sm p-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500">
+    <button onclick="sendMessage()"
+            class="ml-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+      Send
+    </button>
+  </div>
+</div>
+
+  <!-- Appointment Booking Modal -->
+<div id="bookingModal" class="hidden fixed inset-0 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm z-50">
+  <div id="bookingCard"
+       class="bg-white w-full sm:w-96 rounded-t-2xl sm:rounded-xl shadow-xl p-6 relative transform translate-y-full transition-transform duration-300 ease-out">
+
+    <button onclick="closeBooking()" class="absolute top-3 right-4 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+    <h3 class="text-2xl font-bold text-blue-600 mb-4 text-center">Book an Appointment</h3>
+
+    <form id="bookingForm" onsubmit="submitBooking(event)" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1 text-gray-700">Full Name</label>
+        <input type="text" id="fullName" required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1 text-gray-700">Phone Number</label>
+        <input type="tel" id="phone" required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1 text-gray-700">Preferred Date</label>
+        <input type="date" id="date" required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1 text-gray-700">Preferred Time</label>
+        <input type="time" id="time" required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">
+        Confirm Appointment
+      </button>
+    </form>
+
+    <p id="bookingMessage" class="text-center mt-3 text-sm text-green-600 hidden">✅ Appointment request sent!</p>
+  </div>
+</div>
+<!-- Contact Options Modal -->
+<div id="contactModal" class="hidden fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
+  <div id="contactCard" class="bg-white w-80 rounded-2xl shadow-xl p-6 relative transform translate-y-full transition-transform duration-300 ease-out">
+    <button onclick="closeContactOptions()" class="absolute top-3 right-4 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+    <h3 class="text-2xl font-bold text-blue-600 mb-4 text-center">Contact Us</h3>
+    <p class="text-center text-gray-600 mb-6">How would you like to reach us?</p>
+
+    <div class="space-y-4">
+      <button onclick="window.open('tel:+254724370896')" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-semibold flex items-center justify-center gap-2">
+        📞 Call Clinic
+      </button>
+      <button onclick="window.open('https://wa.me/254724370896','_blank')" class="w-full bg-[#25D366] hover:bg-[#1ebe5b] text-white py-2 rounded-lg font-semibold flex items-center justify-center gap-2">
+        💬 WhatsApp Chat
+      </button>
+    </div>
+  </div>
+</div>
+
+ <script>
+    // ===== HERO SLIDER =====
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentSlide = 0;
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 4000);
+
+    // ===== CHATBOT =====
+    const chatbotWindow = document.getElementById("chatbotWindow");
+
+    function toggleChat() {
+      chatbotWindow.classList.toggle("hidden");
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const chatBox = document.getElementById("chatBox");
+      const message = input.value.trim();
+      if (!message) return;
+
+      appendMessage(message, "user");
+      input.value = "";
+      appendMessage("Typing...", "bot");
+
+      try {
+        const res = await fetch("chat.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "message=" + encodeURIComponent(message)
+        });
+
+        const reply = await res.text();
+        chatBox.lastChild.innerHTML = reply;
+      } catch (err) {
+        chatBox.lastChild.innerHTML = "⚠️ Error contacting the server.";
+      }
+    }
+
+    function appendMessage(text, sender) {
+      const chatBox = document.getElementById("chatBox");
+      const msgDiv = document.createElement("div");
+      msgDiv.className = (sender === "user")
+        ? "bg-blue-600 text-white p-3 rounded-lg ml-auto max-w-[80%]"
+        : "bot-msg bg-gray-100 text-gray-800 p-3 rounded-lg mr-auto max-w-[80%]";
+      msgDiv.innerHTML = text;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+ // ===== MOBILE DRAWER MENU TOGGLE =====
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const menuOverlay = document.getElementById("menuOverlay");
+let menuOpen = false;
+
+menuBtn.addEventListener("click", toggleMenu);
+menuOverlay.addEventListener("click", toggleMenu);
+
+function toggleMenu() {
+  menuOpen = !menuOpen;
+
+  if (menuOpen) {
+    // Show overlay
+    menuOverlay.classList.remove("hidden");
+    setTimeout(() => menuOverlay.classList.remove("opacity-0"), 10);
+
+    // Slide menu in
+    mobileMenu.classList.remove("hidden");
+    setTimeout(() => mobileMenu.classList.remove("-translate-x-full"), 10);
+
+    // Animate hamburger → X
+    menuBtn.children[0].classList.add("rotate-45", "translate-y-[8px]");
+    menuBtn.children[1].classList.add("opacity-0");
+    menuBtn.children[2].classList.add("-rotate-45", "-translate-y-[8px]");
+  } else {
+    // Hide overlay
+    menuOverlay.classList.add("opacity-0");
+    setTimeout(() => menuOverlay.classList.add("hidden"), 300);
+
+    // Slide menu out
+    mobileMenu.classList.add("-translate-x-full");
+    setTimeout(() => mobileMenu.classList.add("hidden"), 300);
+
+    // Animate X → hamburger
+    menuBtn.children[0].classList.remove("rotate-45", "translate-y-[8px]");
+    menuBtn.children[1].classList.remove("opacity-0");
+    menuBtn.children[2].classList.remove("-rotate-45", "-translate-y-[8px]");
+  }
+}
+// ===== BOOKING MODAL =====
+const bookingModal = document.getElementById("bookingModal");
+
+function openBooking() {
+  const bookingModal = document.getElementById("bookingModal");
+  const bookingCard = document.getElementById("bookingCard");
+
+  bookingModal.classList.remove("hidden");
+  setTimeout(() => {
+    bookingModal.classList.remove("opacity-0");
+    bookingCard.classList.remove("translate-y-full");
+  }, 10);
+}
+
+function closeBooking() {
+  const bookingModal = document.getElementById("bookingModal");
+  const bookingCard = document.getElementById("bookingCard");
+
+  bookingCard.classList.add("translate-y-full");
+  bookingModal.classList.add("opacity-0");
+  setTimeout(() => bookingModal.classList.add("hidden"), 300);
+}
+
+
+function submitBooking(event) {
+  event.preventDefault();
+  const name = document.getElementById("fullName").value;
+  const phone = document.getElementById("phone").value;
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
+
+  // Show confirmation
+  document.getElementById("bookingMessage").classList.remove("hidden");
+
+  // Optional: send to WhatsApp automatically (replace with your number)
+  const msg = `Hello, my name is ${name}. I would like to book a dental appointment on ${date} at ${time}. My phone number is ${phone}.`;
+  setTimeout(() => {
+    window.open(`https://wa.me/254724370896?text=${encodeURIComponent(msg)}`, "_blank");
+    closeBooking();
+  }, 1200);
+}
+document.getElementById("bookingModal").addEventListener("click", (e) => {
+  if (e.target.id === "bookingModal") {
+    closeBooking();
+  }
+});
+// ===== CONTACT MODAL =====
+function openContactOptions() {
+  const contactModal = document.getElementById("contactModal");
+  const contactCard = document.getElementById("contactCard");
+
+  contactModal.classList.remove("hidden");
+  setTimeout(() => {
+    contactModal.classList.remove("opacity-0");
+    contactCard.classList.remove("translate-y-full");
+  }, 10);
+}
+
+function closeContactOptions() {
+  const contactModal = document.getElementById("contactModal");
+  const contactCard = document.getElementById("contactCard");
+
+  contactCard.classList.add("translate-y-full");
+  contactModal.classList.add("opacity-0");
+  setTimeout(() => contactModal.classList.add("hidden"), 300);
+}
+
+// Close when clicking outside
+document.getElementById("contactModal").addEventListener("click", (e) => {
+  if (e.target.id === "contactModal") {
+    closeContactOptions();
+  }
+});
+
+  </script>
+</body>
+</html>

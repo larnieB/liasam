@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — Liasam Dental Clinic</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --blue: #007bff; }
+    html, body { margin: 0; scroll-behavior: smooth; }
+
+    .hero {
+      position: relative;
+      height: 80vh;
+      background: linear-gradient(to bottom right, rgba(0,123,255,0.8), rgba(0,123,255,0.6)),
+                  url('image2.jpeg') center/cover no-repeat;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .floating-btn {
+      position: fixed;
+      bottom: 20px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      z-index: 50;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+    }
+    .whatsapp-btn { right: 20px; background-color: #25D366; }
+    .chatbot-btn { right: 90px; background-color: #007bff; }
+    @keyframes bounce {
+      0%,20%,50%,80%,100%{transform:translateY(0)}
+      40%{transform:translateY(-10px)}
+      60%{transform:translateY(-5px)}
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow fixed top-0 left-0 w-full z-40">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">Liasam Dental Clinic</h1>
+      <nav class="space-x-6 hidden md:flex">
+        <a href="index.html" class="hover:text-blue-600 font-medium">Home</a>
+        <a href="about.html" class="text-blue-600 font-semibold">About</a>
+        <a href="#testimonials" class="hover:text-blue-600 font-medium">Testimonials</a>
+        <a href="index.html#map" class="hover:text-blue-600 font-medium">Map</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero mt-16">
+    <div class="max-w-3xl">
+      <h2 class="text-4xl sm:text-5xl font-extrabold mb-4">Caring for Smiles Since Day One</h2>
+      <p class="text-lg text-blue-50 leading-relaxed">
+        At Liasam Dental Clinic, we believe that a healthy smile is the foundation of confidence.
+        Our mission is to provide top-quality, compassionate dental care for all ages in Thika.
+        With modern technology, skilled professionals, and personalized attention, we ensure your smile
+        stays beautiful and healthy — always.
+      </p>
+    </div>
+  </section>
+
+  <!-- About Content -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6 text-center max-w-4xl">
+      <h3 class="text-3xl font-bold text-blue-600 mb-6">Why Choose Liasam Dental Clinic?</h3>
+      <p class="text-gray-700 mb-8 leading-relaxed">
+        We pride ourselves on creating a warm, friendly environment where patients feel comfortable
+        and cared for. From preventive care and cosmetic dentistry to advanced treatments, our clinic
+        combines experience, empathy, and cutting-edge technology to make your visit exceptional.
+      </p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h4 class="font-bold text-blue-600 mb-2">Modern Equipment</h4>
+          <p class="text-gray-600">We use the latest dental technology to ensure precision and comfort in every procedure.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h4 class="font-bold text-blue-600 mb-2">Experienced Team</h4>
+          <p class="text-gray-600">Our team of skilled dentists and hygienists are passionate about improving oral health.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h4 class="font-bold text-blue-600 mb-2">Personalized Care</h4>
+          <p class="text-gray-600">Every smile is unique. We tailor our services to meet each patient’s individual needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="py-16">
+    <div class="container mx-auto px-6 text-center">
+      <h3 class="text-3xl font-bold text-blue-600 mb-8">What Our Patients Say</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white shadow-md rounded-xl p-6">
+          <p class="italic text-gray-600 mb-3">
+            “I used to be afraid of dental visits, but the staff here are so gentle and kind.
+            Now I actually look forward to my appointments!”
+          </p>
+          <h4 class="font-semibold text-blue-700">— Mary N.</h4>
+        </div>
+
+        <div class="bg-white shadow-md rounded-xl p-6">
+          <p class="italic text-gray-600 mb-3">
+            “The best dental experience I’ve ever had! The clinic is clean, modern, and they really care about their patients.”
+          </p>
+          <h4 class="font-semibold text-blue-700">— John K.</h4>
+        </div>
+
+        <div class="bg-white shadow-md rounded-xl p-6">
+          <p class="italic text-gray-600 mb-3">
+            “Highly recommend Liasam Dental Clinic! They explained everything clearly and made me feel at ease throughout my treatment.”
+          </p>
+          <h4 class="font-semibold text-blue-700">— Esther W.</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WhatsApp Button -->
+  <div class="floating-btn whatsapp-btn" onclick="window.open('https://wa.me/254724370896','_blank')">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12.004 2C6.48 2 2 6.48 2 12a9.95 9.95 0 001.637 5.46L2 22l4.694-1.617A9.949 9.949 0 0012.004 22C17.524 22 22 17.52 22 12S17.524 2 12.004 2z"/>
+    </svg>
+  </div>
+
+  <!-- Chatbot Floating Button -->
+  <div class="floating-btn chatbot-btn" onclick="alert('Chatbot coming soon!')">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 3C6.486 3 2 6.935 2 12c0 1.92.75 3.678 2 5.09V21l3.09-1.545C8.322 20.251 10.08 21 12 21c5.514 0 10-3.935 10-9s-4.486-9-10-9z"/>
+    </svg>
+  </div>
+
+</body>
+</html>
